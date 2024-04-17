@@ -123,7 +123,7 @@
                 <!-- Reviewer (required)--> 
                 <div class="mb-3">
                     <label for="reviewer" class="col-form-label">Reviewer:</label>
-                    <input type="text" value="<?php echo $data['reviewer']; ?>" required class="form-control" name="reviewer">
+                    <input type="text" readonly value="<?php echo $data['reviewer']; ?>" required class="form-control" name="reviewer">
                 </div>
 
                 <!-- เพิ่มปุ่ม Update-->

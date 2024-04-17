@@ -144,8 +144,8 @@
 
                 
                 <div class="col-md-3 text-end">
-                    <a type="button" class="btn btn-outline-primary me-2" href="login_page.php">Log In</a>
-                    <a type="button" class="btn btn-primary" href="register.php">Create Account</a>
+                    <!-- a type="button" class="btn btn-outline-primary me-2" href="login_page.php">Create Content</!-->
+                    <a type="button" class="btn btn-danger" href="logout.php">Log Out</a>
                 </div>
             </header>
         </div>

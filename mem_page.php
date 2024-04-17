@@ -1,6 +1,14 @@
 <?php
     // Connecting Database . . .
     session_start();
+
+    // Check session login AS ADMIN
+    if (!isset($_SESSION['admin_login'])) {
+        header("location: ../login_page.php");
+    }
+    
+
+
     require_once "config/content_db.php";
     
     // กระบวกการ การ Delete ไฟล์
@@ -33,6 +41,21 @@
         </head>
         <!--*********************************************************** -->  
         <body>
+
+        <!-- Check Session -->
+        <?php if(isset($_SESSION['success'])) : ?>
+                <div class="alert alert-success">
+                    <h3>
+                        <?php 
+                            // Alert session success 
+                            echo $_SESSION['success'];
+                            unset($_SESSION['success']);
+                        ?>
+                    </h3>
+                </div>
+            <?php endif ?>
+
+
 
 <!-- D A T A _ I N S E R T -->
 
@@ -77,7 +100,8 @@
                         <!-- Reviewer (required)--> 
                         <div class="mb-3">
                             <label for="reviewer" class="col-form-label">Reviewer:</label>
-                            <input type="text" required class="form-control" name="reviewer">
+                            <!-- <input type="text" required class="form-control" name="reviewer"> -->
+                            <input type="text" readonly value="<?php echo $_SESSION['admin_login']; ?>" required class="form-control" name="reviewer">
                         </div>
 
                         <!-- Botton Submit-->
@@ -94,20 +118,29 @@
 
  <!-- Display Zone -->
     <!-- Build Container --> 
+
         <div class="container mt-5">
             <div class="row">
 
                 <div class="col d-flex justify-content-star">
-                    <h1>Content</h1>
+                    <h1>
+                        <?php if(isset($_SESSION['admin_login'])) { ?>
+                        Welcome, <?php echo $_SESSION['admin_login']; }?>
+                    </h1>                
                 </div>
 
                 <div class="col-md-auto d-flex justify-content-end align-self-center">                    
-                    <a class="btn btn-secondary" href="index.php" role="button">Page</a>
+                    <a class="btn btn-secondary" href="homepage_member.php" role="button">Page</a>
                 </div>
 
                 <div class="col-md-auto d-flex justify-content-end align-self-center">
                     <!-- Set Modal Pop-up [ data-bs-target=_________ ]--> 
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contentModal" data-bs-whatever="@mdo">New Content</button>
+                </div>
+
+                <div class="col-md-auto d-flex justify-content-end align-self-center">
+                    <!-- Log Out Button --> 
+                    <a class="btn btn-danger" href="logout.php" role="button">Log Out</a>
                 </div>
 
                 
@@ -153,7 +186,8 @@
             <tbody>
                 <!-- query ข้อมูล sql ด้วยตัวแปล conn--> 
                 <?php 
-                    $stmt = $conn->query("SELECT * FROM content");
+                    $usrss = $_SESSION['admin_login'];
+                    $stmt = $conn->query("SELECT * FROM content WHERE reviewer = '$usrss' ");
                     $stmt->execute();
                     $users = $stmt->fetchAll();
 
