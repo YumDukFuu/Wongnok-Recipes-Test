@@ -7,7 +7,8 @@
     if (isset($_POST['btn_register'])) {
         $username = $_POST['txt_username'];
         $email = $_POST['txt_email'];
-        $password = $_POST['txt_password'];
+        // $password = $_POST['txt_password'];
+        $password = md5($_POST['txt_password']);
         $role = $_POST['txt_role'];
 
         if (empty($username)) {
